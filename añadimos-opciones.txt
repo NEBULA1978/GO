@@ -1,0 +1,271 @@
+PASO 1
+
+¡Genial! Aquí te dejo algunas ideas para agregar funcionalidades a tu juego de "Verdades en Go":
+
+    Agrega preguntas y desafíos personalizados: Crea un archivo CSV o JSON con una lista de preguntas y desafíos, y modifica el código para que el programa los lea y los utilice como opciones en el juego.
+
+    Agrega categorías y niveles de dificultad: Agrega comandos adicionales a Cobra para permitir que los usuarios seleccionen diferentes categorías y niveles de dificultad para las preguntas y desafíos.
+
+    Agrega una opción para ingresar preguntas y desafíos personalizados: Permite que los usuarios ingresen sus propias preguntas y desafíos personalizados en el juego.
+
+    Agrega una opción para jugar en equipos: Permite que los usuarios jueguen en equipos y agregue preguntas y desafíos para equipos.
+
+    Agrega una opción para cambiar el idioma del juego: Agrega una opción para cambiar el idioma del juego y agrega traducciones para diferentes idiomas.
+
+    Agrega una opción para ver las estadísticas del juego: Agrega una opción para ver las estadísticas del juego, como la cantidad de preguntas y desafíos respondidos correctamente, la cantidad de veces que se ha jugado, etc.
+
+    Agrega una opción para agregar nuevas preguntas y desafíos: Permite que los usuarios agreguen nuevas preguntas y desafíos al juego y guarde las nuevas preguntas y desafíos en un archivo CSV o JSON.
+
+    Agrega una opción para jugar en línea: Permite que los usuarios jueguen en línea con otros usuarios y agregue preguntas y desafíos para juegos en línea.
+
+Espero que estas ideas te ayuden a agregar funcionalidades interesantes a tu juego de "Verdades en Go". ¡Diviértete desarrollando tu juego y jugando con tus amigos!
+
+AGREGO CODIGO:
+
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+
+	"github.com/spf13/cobra"
+)
+
+var langCmd = &cobra.Command{
+	Use:   "lang",
+	Short: "Cambiar el idioma del juego",
+	Long:  `Cambiar el idioma del juego entre español (es) e inglés (en).`,
+	Run: func(cmd *cobra.Command, args []string) {
+		lang, _ := cmd.Flags().GetString("lang")
+		switch lang {
+		case "es":
+			fmt.Println("Idioma cambiado a español.")
+		case "en":
+			fmt.Println("Language changed to English.")
+		default:
+			fmt.Println("Idioma no válido. Usando idioma predeterminado (español).")
+		}
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(langCmd)
+	langCmd.PersistentFlags().String("lang", "es", "Cambiar el idioma del juego (es/en)")
+}
+
+var rootCmd = &cobra.Command{
+	Use:   "verdades",
+	Short: "Un juego de verdades en Go",
+	Long:  `Un juego simple de verdades para jugar con amigos.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		rand.Seed(time.Now().Unix())
+		fmt.Println("Bienvenido a Verdades en Go!")
+		fmt.Println("¿Listo para jugar?")
+		fmt.Println("¡Comencemos!")
+		fmt.Println("¿Qué quieres hacer?")
+
+		opciones := []string{"Verdad", "Desafío"}
+		opcion := opciones[rand.Intn(len(opciones))]
+		fmt.Printf("%s\n", opcion)
+	},
+}
+
+func init() {
+	rootCmd.PersistentFlags().String("lang", "es", "idioma del juego (es/en)")
+}
+
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+PARA EJECUTAR:
+go build
+
+next@next-System:~/Vídeos/GO/apnext@next-System:~/Vídeos/GO/app-go-IA$ .lang --lang es
+/mi-juego lang --lang es
+Idioma cambiado a español.
+next@next-System:~/Vídeos/GO/ap
+p-go-IA$ ./mi-juego lang --lang en
+Language changed to English.
+next@next-System:~/Vídeos/GO/app-go-IA$
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+PASO 2
+
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+
+	"github.com/spf13/cobra"
+)
+
+var langCmd = &cobra.Command{
+	Use:   "lang",
+	Short: "Cambiar el idioma del juego",
+	Long:  `Cambiar el idioma del juego entre español (es) e inglés (en).`,
+	Run: func(cmd *cobra.Command, args []string) {
+		lang, _ := cmd.Flags().GetString("lang")
+		switch lang {
+		case "es":
+			fmt.Println("Idioma cambiado a español.")
+		case "en":
+			fmt.Println("Language changed to English.")
+		default:
+			fmt.Println("Idioma no válido. Usando idioma predeterminado (español).")
+		}
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(langCmd)
+	langCmd.PersistentFlags().String("lang", "es", "Cambiar el idioma del juego (es/en)")
+}
+
+var duracionCmd = &cobra.Command{
+	Use:   "duracion",
+	Short: "Configurar la duración del juego",
+	Long:  `Configurar la duración del juego en minutos.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		duracion, _ := cmd.Flags().GetInt("duracion")
+		fmt.Println("La duración del juego es de", duracion, "minutos.")
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(duracionCmd)
+	duracionCmd.PersistentFlags().Int("duracion", 10, "Configurar la duración del juego (minutos)")
+}
+
+var rootCmd = &cobra.Command{
+	Use:   "verdades",
+	Short: "Un juego de verdades en Go",
+	Long:  `Un juego simple de verdades para jugar con amigos.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		rand.Seed(time.Now().Unix())
+		fmt.Println("Bienvenido a Verdades en Go!")
+		fmt.Println("¿Listo para jugar?")
+		fmt.Println("¡Comencemos!")
+		fmt.Println("¿Qué quieres hacer?")
+
+		opciones := []string{"Verdad", "Desafío"}
+		opcion := opciones[rand.Intn(len(opciones))]
+		fmt.Printf("%s\n", opcion)
+	},
+}
+
+func init() {
+	rootCmd.PersistentFlags().String("lang", "es", "idioma del juego (es/en)")
+}
+
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+ 
+PARA EJECUTAR CAMBIOS:
+
+go build
+next@next-System:~/Vídeos/GO/app-go-IA$ ./mi-juego duracion --duracion 15
+La duración del juego es de 15 minutos.
+next@next-System:~/Vídeos/GO/app-go-IA$ 
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+PASO 3
+
+MODIFOCO funcion init
+
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+
+	"github.com/spf13/cobra"
+)
+
+var rootCmd = &cobra.Command{
+	Use:   "verdades",
+	Short: "Un juego de verdades en Go",
+	Long:  `Un juego simple de verdades para jugar con amigos.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		rand.Seed(time.Now().Unix())
+		fmt.Println("Bienvenido a Verdades en Go!")
+		fmt.Println("¿Listo para jugar?")
+		fmt.Println("¡Comencemos!")
+		fmt.Println("¿Qué quieres hacer?")
+
+		opciones := []string{"Verdad", "Desafío"}
+		opcion := opciones[rand.Intn(len(opciones))]
+		fmt.Printf("%s\n", opcion)
+	},
+}
+
+var langCmd = &cobra.Command{
+	Use:   "lang",
+	Short: "Cambiar el idioma del juego",
+	Long:  `Cambiar el idioma del juego entre español (es) e inglés (en).`,
+	Run: func(cmd *cobra.Command, args []string) {
+		lang, _ := cmd.Flags().GetString("lang")
+		switch lang {
+		case "es":
+			fmt.Println("Idioma cambiado a español.")
+		case "en":
+			fmt.Println("Language changed to English.")
+		default:
+			fmt.Println("Idioma no válido. Usando idioma predeterminado (español).")
+		}
+	},
+}
+
+var duracionCmd = &cobra.Command{
+	Use:   "duracion",
+	Short: "Configurar la duración del juego",
+	Long:  `Configurar la duración del juego en minutos.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		duracion, _ := cmd.Flags().GetInt("duracion")
+		fmt.Println("La duración del juego es de", duracion, "minutos.")
+	},
+}
+
+func init() {
+	rootCmd.PersistentFlags().String("lang", "es", "idioma del juego (es/en)")
+
+	rootCmd.AddCommand(langCmd)
+	langCmd.PersistentFlags().String("lang", "es", "Cambiar el idioma del juego (es/en)")
+
+	rootCmd.AddCommand(duracionCmd)
+	duracionCmd.PersistentFlags().Int("duracion", 10, "Configurar la duración del juego (minutos)")
+}
+
+func main() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+
+PASO 4
+

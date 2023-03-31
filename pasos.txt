@@ -93,3 +93,4 @@ main.go es el archivo que contiene el código fuente de tu programa. Ahora que t
     Finalmente, ejecuta el archivo ejecutable generado con el comando ./mi-juego verdades para probar tu programa.
 
 Recuerda que para agregar más funcionalidades a tu programa, puedes agregar más comandos a Cobra y personalizar las opciones para el usuario. También puedes agregar más dependencias a tu proyecto utilizando Go Modules.
+
