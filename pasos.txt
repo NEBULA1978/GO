@@ -1,0 +1,95 @@
+ un ejemplo de cómo crear un juego de "verdades en Go" utilizando la biblioteca Cobra para manejar la línea de comandos:
+
+    Primero, asegúrate de tener instalado Go y Cobra. Puedes descargar Go desde el sitio web oficial de Go y Cobra desde la línea de comandos con el siguiente comando:
+
+go
+
+go get -u github.com/spf13/cobra/cobra
+
+    Crea un nuevo proyecto en Go y agrega Cobra como dependencia:
+
+go
+
+go mod init mi-juego
+go get -u github.com/spf13/cobra/cobra
+
+    Crea un archivo main.go y agrega el siguiente código:
+
+go
+
+package main
+
+import (
+    "fmt"
+    "math/rand"
+    "time"
+
+    "github.com/spf13/cobra"
+)
+
+var rootCmd = &cobra.Command{
+    Use:   "verdades",
+    Short: "Un juego de verdades en Go",
+    Long:  `Un juego simple de verdades para jugar con amigos.`,
+    Run: func(cmd *cobra.Command, args []string) {
+        rand.Seed(time.Now().Unix())
+        fmt.Println("Bienvenido a Verdades en Go!")
+        fmt.Println("¿Listo para jugar?")
+        fmt.Println("¡Comencemos!")
+        fmt.Println("¿Qué quieres hacer?")
+
+        opciones := []string{"Verdad", "Desafío"}
+        opcion := opciones[rand.Intn(len(opciones))]
+        fmt.Printf("%s\n", opcion)
+    },
+}
+
+func init() {
+    rootCmd.PersistentFlags().String("lang", "es", "idioma del juego (es/en)")
+}
+
+func main() {
+    if err := rootCmd.Execute(); err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+    }
+}
+
+Este código crea un nuevo comando de Cobra llamado "verdades" que genera una opción aleatoria de "Verdad" o "Desafío" para que el usuario elija.
+
+    Ahora puedes compilar y ejecutar el código con los siguientes comandos en la terminal:
+
+go
+
+go build
+./mi-juego verdades
+
+Esto debería imprimir algo como:
+
+css
+
+Bienvenido a Verdades en Go!
+¿Listo para jugar?
+¡Comencemos!
+¿Qué quieres hacer?
+Desafío
+
+ go.mod   go.sum   main.go ¿tengo estostres archivos que hago ahora?
+
+go.mod y go.sum son archivos que se utilizan en Go Modules, una herramienta para manejar dependencias en proyectos de Go. go.mod es un archivo que define el módulo del proyecto y sus dependencias, mientras que go.sum es un archivo que contiene los hashes de las dependencias.
+
+main.go es el archivo que contiene el código fuente de tu programa. Ahora que tienes los tres archivos, puedes seguir los siguientes pasos:
+
+    Abre una terminal y navega hasta el directorio raíz de tu proyecto usando el comando cd.
+
+    Ejecuta el comando go mod init mi-juego para crear un nuevo módulo con el nombre "mi-juego".
+
+    Luego, ejecuta el comando go get github.com/spf13/cobra para descargar e instalar la biblioteca Cobra en tu proyecto.
+
+    Crea un archivo llamado main.go y agrega el código fuente de tu programa. Asegúrate de que el archivo contenga las importaciones necesarias y que el código esté estructurado correctamente.
+
+    Ejecuta el comando go build para compilar el programa y generar un archivo ejecutable con el nombre de tu módulo.
+
+    Finalmente, ejecuta el archivo ejecutable generado con el comando ./mi-juego verdades para probar tu programa.
+
+Recuerda que para agregar más funcionalidades a tu programa, puedes agregar más comandos a Cobra y personalizar las opciones para el usuario. También puedes agregar más dependencias a tu proyecto utilizando Go Modules.
